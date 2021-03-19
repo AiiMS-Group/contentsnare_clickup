@@ -16,7 +16,7 @@ class WebhookController extends Controller
         'Google My Business' => 440056,
         'Landing Page' => 440378,
         'SEO Content' => 440050,
-        'Social Profile' => 10056276,
+        'Social Profile' => 15504201,
         'Google / Bing Ads' => 440023,
     ];
 
