@@ -86,7 +86,7 @@ class WebhookController extends Controller
 
     private function processDefault($name, Collection $values)
     {
-        $value = $values->join(', ');
+        $value = $values->map(fn ($value) => str_replace('&amp;', '&', $value))->join(', ');
         return "**{$name}:**\n{$value}";
     }
 }
