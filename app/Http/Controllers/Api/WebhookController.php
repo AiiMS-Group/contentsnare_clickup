@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Log;
 class WebhookController extends Controller
 {
     const TEMPLATE_TO_LIST_ID = [
-        'Custom Website - New' => 440061,
+        'Custom Website' => 440061,
+        'Google My Business' => 440056,
+        'Landing Page' => 440378,
+        'SEO Content' => 440050,
+        'Social Profile' => 10056276,
+        'Google / Bing Ads' => 440023,
     ];
 
     const TYPE_TO_FUNCTION = [
