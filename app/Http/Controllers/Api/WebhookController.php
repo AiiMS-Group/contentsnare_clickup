@@ -13,7 +13,7 @@ class WebhookController extends Controller
 {
     const TEMPLATE_TO_LIST_ID = [
         'Custom Website' => 440061,
-        'Google My Business' => 440056,
+        'Google My Business' => 15504197,
         'Landing Page' => 440378,
         'SEO Content' => 440050,
         'Social Profile' => 15498957,
