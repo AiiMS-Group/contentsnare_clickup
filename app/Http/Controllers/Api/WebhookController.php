@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Log;
 class WebhookController extends Controller
 {
     const TEMPLATE_TO_LIST_ID = [
-        'Custom Website' => 440061,
-        'Google My Business' => 15504197,
-        'Landing Page' => 440378,
-        'SEO Content' => 440050,
-        'Social Profile' => 15498957,
-        'Google / Bing Ads' => 440023,
+        'Custom Website' => [440061],
+        'Google My Business' => [15504197, 15577132],
+        'Landing Page' => [440378],
+        'SEO Content' => [440050],
+        'Social Profile' => [15498957, 15504201],
+        'Google / Bing Ads' => [440023],
     ];
 
     const TYPE_TO_FUNCTION = [
@@ -50,13 +50,15 @@ class WebhookController extends Controller
         })->join("\n\n");
 
         $template = $request->request_template_name;
-        $listId = self::TEMPLATE_TO_LIST_ID[$template];
+        $listIds = self::TEMPLATE_TO_LIST_ID[$template];
         $businessName = $request->client['company_name'];
 
-        $clickUpClient->task->create($listId, [
-            'name' => "{$businessName} - {$template}",
-            'markdown_description' => $parsedSections,
-        ]);
+        foreach ($listIds as $listId) {
+            $clickUpClient->task->create($listId, [
+                'name' => "{$businessName} - {$template}",
+                'markdown_description' => $parsedSections,
+            ]);
+        }
     }
 
     private function processUrl($name, Collection $values)
