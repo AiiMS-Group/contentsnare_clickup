@@ -7,7 +7,6 @@ use App\Library\ClickUp\ClickUp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
@@ -49,6 +48,10 @@ class WebhookController extends Controller
             return "**{$name}**\n{$parsedFields}";
         })->join("\n\n");
 
+        $clientAccountID = $sections->flatten(2)->filter(function($field) {
+            return is_array($field) && str_contains($field['name'], 'Client Account ID');
+        })->first()['values_flat'];
+
         $template = $request->request_template_name;
         $listIds = self::TEMPLATE_TO_LIST_ID[$template];
         $businessName = $request->client['company_name'];
@@ -57,6 +60,14 @@ class WebhookController extends Controller
             $clickUpClient->task->create($listId, [
                 'name' => "{$businessName} - {$template}",
                 'markdown_description' => $parsedSections,
+                'check_required_custom_fields' => true,
+                'custom_fields' => [
+                    [
+                        // Client Account ID Field
+                        'id' => '9360f4ab-7a92-4dcf-b3d1-2020d68749f6',
+                        'value' => $clientAccountID
+                    ]
+                ]
             ]);
         }
     }
