@@ -50,7 +50,7 @@ class WebhookController extends Controller
 
         $clientAccountID = $sections->flatten(2)->filter(function($field) {
             return is_array($field) && str_contains($field['name'], 'Client Account ID');
-        })->first()['values_flat'];
+        })->first()['values_flat'] ?? null;
 
         $template = $request->request_template_name;
         $listIds = self::TEMPLATE_TO_LIST_ID[$template];
